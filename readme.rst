@@ -4,15 +4,15 @@ Setup
 
 You can setup this project by running :code:`gradle wrapper`.
 
-Build Java Library
-------------------
-
-You can build the Java library (:code:`coordtxl-core.jar`) by running :code:`gradle jar`.
-
 Running Tests
 -------------
 
 The Java tests can be run like :code:`./gradlew test --tests 'coordtxl.*'`.
+
+Build Java Library
+------------------
+
+You can build the Java library (:code:`coordtxl-core.jar`) by running :code:`gradle jar`.
 
 FITS Header Keywords Used
 -------------------------
