@@ -13,8 +13,8 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.annotations.SerializedName;
 import java.lang.reflect.Type;
 import coordtxl.coords.WCSTransform;
-import coordtxl.coords.WCSKeywordProvider;
 import coordtxl.coords.WorldCoords;
+import coordtxl.coords.MapKeywordProvider;
 import java.util.Map;
 import java.util.AbstractMap;
 import java.util.Set;
@@ -29,115 +29,60 @@ import java.awt.geom.Point2D;
 public class CasaImageLabelTest {
 
 
-    public class MapKeywordProvider implements WCSKeywordProvider {
+    public class LoggingMapKeywordProvider extends MapKeywordProvider {
 
-        private AbstractMap<String,Object> wcsMap;
-
-        public MapKeywordProvider( AbstractMap<String,Object> values ) {
-            wcsMap = new HashMap<String,Object>( );
-            for ( String key : values.keySet( ) ) {
-                if ( values.get(key) instanceof ArrayList ) {
-                    ArrayList contain = (ArrayList) values.get(key);
-                    wcsMap.put( key, contain.clone( ) );
-                    int count = 1;
-                    for ( Object v : contain ) {
-                        wcsMap.put( key+count, v );
-                        count += 1;
-                    }
-                } else {
-                    wcsMap.put( key, values.get(key) );
-                }
-            }
+        public LoggingMapKeywordProvider( AbstractMap<String,Object> values ) {
+            super(values);
         }
 
         public boolean findKey(String key) {
             System.out.println("findKey:\t" + key);
-            return wcsMap.containsKey(key);
+            return super.findKey(key);
         }
 
+        @Override
         public String getStringValue(String key) { return getStringValue(key,null); }
+        @Override
         public String getStringValue(String key, String defaultValue) {
-            System.out.println("getStringValue:\t" + key + ", " + (wcsMap.containsKey(key) ? wcsMap.get(key).toString( ) : ("<default: " + defaultValue + ">")) );
-            return wcsMap.containsKey(key) ? wcsMap.get(key).toString( ) : defaultValue;
+            String result = super.getStringValue( key, defaultValue );
+            System.out.println("getStringValue:\t" + key + ", " + (super.findKey(key) ? result : ("<default: " + defaultValue + ">")));
+            return result;
         }
 
+        @Override
         public double getDoubleValue(String key) { return getDoubleValue( key, 0.0 ); }
+        @Override
         public double getDoubleValue(String key, double defaultValue) {
-            if ( ! wcsMap.containsKey(key) ) {
+            double result = super.getDoubleValue( key, defaultValue );
+            if ( super.findKey(key) )
+                System.out.println("getDoubleValue:\t" + key + ", " + result);
+            else
                 System.out.println("getDoubleValue:\t" + key + ", " + ("<default: " + defaultValue + ">") );
-                return defaultValue;
-            }
-            Object result = wcsMap.get(key);
-            if ( result instanceof Number ) {
-                System.out.println("getDoubleValue:\t" + key + ", " + ((Number) wcsMap.get(key)).doubleValue( ));
-                return ((Number) result).doubleValue( );
-            } else {
-                System.out.println("getDoubleValue:\t" + key + ", " + "<default: " + defaultValue + ">");
-                return defaultValue;
-            }
+            return result;
         }
 
+        @Override
         public float getFloatValue(String key) { return getFloatValue(key,(float)0.0); }
+        @Override
         public float getFloatValue(String key, float defaultValue) {
-            if ( ! wcsMap.containsKey(key) ) {
+            float result = super.getFloatValue( key, defaultValue );
+            if ( super.findKey(key) )
+                System.out.println("getFloatValue:\t" + key + ", " + result);
+            else
                 System.out.println("getFloatValue:\t" + key + ", " + ("<default: " + defaultValue + ">") );
-                return defaultValue;
-            }
-            Object result = wcsMap.get(key);
-            if ( result instanceof Number ) {
-                System.out.println("getFloatValue:\t" + key + ", " + ((Number) wcsMap.get(key)).floatValue( ));
-                return ((Number) result).floatValue( );
-            } else {
-                System.out.println("getFloatValue:\t" + key + ", " + "<default: " + defaultValue + ">");
-                return defaultValue;
-            }
+            return result;
         }
 
+        @Override
         public int getIntValue(String key) { return getIntValue(key,0); }
+        @Override
         public int getIntValue(String key, int defaultValue) {
-            if ( ! wcsMap.containsKey(key) ) {
+            int result = super.getIntValue( key, defaultValue );
+            if ( super.findKey(key) )
+                System.out.println("getIntValue:\t" + key + ", " + result);
+            else
                 System.out.println("getIntValue:\t" + key + ", " + ("<default: " + defaultValue + ">") );
-                return defaultValue;
-            }
-            Object result = wcsMap.get(key);
-            if ( result instanceof Number ) {
-                System.out.println("getIntValue:\t" + key + ", " + ((Number) wcsMap.get(key)).intValue( ));
-                return ((Number) result).intValue( );
-            } else {
-                System.out.println("getIntValue:\t" + key + ", " + "<default: " + defaultValue + ">");
-                return defaultValue;
-            }
-        }
-
-        public String toString( ) {
-            boolean comma_needed = false;
-            StringBuilder sb = new StringBuilder( "{ " );
-            for ( String key : wcsMap.keySet( ) ) {
-                if ( comma_needed ) sb.append( ", ");
-                else comma_needed = true;
-                sb.append(key);
-                sb.append("=");
-                Object o = wcsMap.get(key);
-                if ( o instanceof String ) {
-                    // Quote strings
-                    sb.append("\"");
-                    sb.append(o);
-                    sb.append("\"");
-                } else {
-                    // Quote elements of list of strings
-                    if ( o instanceof List &&
-                         ((List)o).size( ) > 0 &&
-                         ((List)o).get(0) instanceof String ) {
-                        sb.append( "[" );
-                        sb.append( ((List<String>)o).stream( )
-                                   .map(s -> "\"" + s + "\"")
-                                   .collect(Collectors.joining(", ")) );
-                        sb.append( "]" );
-                    } else sb.append(o);
-                }
-            }
-            sb.append(" }");
-            return sb.toString( );
+            return result;
         }
     }
 
@@ -420,7 +365,7 @@ public class CasaImageLabelTest {
         gsonBuilder.registerTypeAdapter( Object.class, new NaturalDeserializer( ) );
         Gson gson = gsonBuilder.create( );
         AbstractMap<String,Object> map = (AbstractMap<String,Object>) gson.fromJson( new BufferedReader( new InputStreamReader(js_stream)), Object.class );
-        MapKeywordProvider kwp = new MapKeywordProvider(map);
+        LoggingMapKeywordProvider kwp = new LoggingMapKeywordProvider(map);
         int index = indexOfDifference(kwp.toString( ), expected);
         if ( index != -1 ) {
             System.out.println("----------------expected------------------------------------------------------------------------------------------------");
