@@ -1,4 +1,9 @@
 
+Setup
+-----
+
+You can setup this project by running :code:`gradle wrapper`.
+
 Running Tests
 -------------
 
