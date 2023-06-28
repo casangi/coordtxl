@@ -40,7 +40,7 @@
  *** November 4, 1996
  */
 
-package coordtlx.coords;
+package coordtxl.coords;
 
 import java.awt.geom.*;
 

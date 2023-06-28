@@ -5,7 +5,7 @@
  * $Id: NamedCoordinates.java,v 1.1.1.1 2009/02/17 22:50:11 abrighto Exp $
  */
 
-package coordtlx.coords;
+package coordtxl.coords;
 
 
 /**

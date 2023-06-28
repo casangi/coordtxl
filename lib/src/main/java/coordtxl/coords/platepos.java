@@ -49,7 +49,7 @@
 
 */
 
-package coordtlx.coords;
+package coordtxl.coords;
 
 import java.awt.geom.*;
 

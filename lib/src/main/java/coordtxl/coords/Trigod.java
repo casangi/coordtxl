@@ -8,7 +8,7 @@
  * Allan Brighton  1999/05/10  port of trigo.c, Francois Ochsenbein [ESO-IPG]
  */
 
-package coordtlx.coords;
+package coordtxl.coords;
 
 /**
  * Trigonometric Function in degrees.

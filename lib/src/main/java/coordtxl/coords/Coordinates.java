@@ -8,7 +8,7 @@
  * Allan Brighton  1999/05/18  Created
  */
 
-package coordtlx.coords;
+package coordtxl.coords;
 
 /**
  * Abstract interface for coordinates. This interface defines

@@ -56,7 +56,7 @@
  * Subroutine:  fk4prec (ep0, ep1, ra, dec) Precession ep0 to ep1, FK4 system
  */
 
-package coordtlx.coords;
+package coordtxl.coords;
 
 import java.awt.geom.*;
 

@@ -8,7 +8,7 @@
  * Allan Brighton  1999/05/10  port of jprec.c, Francois Ochsenbein [ESO-IPG]
  */
 
-package coordtlx.coords;
+package coordtxl.coords;
 
 /**
  * Precession of Coordinates in new IAU system.

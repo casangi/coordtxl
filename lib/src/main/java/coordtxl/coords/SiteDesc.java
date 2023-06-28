@@ -5,7 +5,7 @@
  * $Id: SiteDesc.java,v 1.1.1.1 2009/02/17 22:50:08 abrighto Exp $
  */
 
-package coordtlx.coords;
+package coordtxl.coords;
 
 import java.util.TimeZone;
 

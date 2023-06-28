@@ -2,7 +2,7 @@
  * $Id: WorldCoordinateConverter.java,v 1.2 2009/04/21 13:31:17 abrighto Exp $
  */
 
-package coordtlx.coords;
+package coordtxl.coords;
 
 import java.awt.geom.Point2D;
 

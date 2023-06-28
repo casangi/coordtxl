@@ -8,7 +8,7 @@
  * Allan Brighton  1999/05/10  port of cotr.c, Francois Ochsenbein [ESO-IPG]
  */
 
-package coordtlx.coords;
+package coordtxl.coords;
 
 /**
  * Based on C routintes by Francois Ochsenbein [ESO-IPG].

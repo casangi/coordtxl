@@ -8,7 +8,7 @@
  * Allan Brighton  1999/05/03  Created, based on C++ version
  */
 
-package coordtlx.coords;
+package coordtxl.coords;
 
 import java.awt.geom.Point2D;
 import java.io.Serializable;

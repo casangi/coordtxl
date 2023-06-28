@@ -2,7 +2,7 @@
 // This is a derived class which isolates the dependency on nom.tam.fits for
 // state management.
 //=== End File Prolog =========================================================
-package coordtlx.coords;
+package coordtxl.coords;
 
 import nom.tam.fits.Header;
 import nom.tam.fits.HeaderCardException;

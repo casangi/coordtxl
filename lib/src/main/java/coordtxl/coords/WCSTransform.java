@@ -39,7 +39,7 @@
 //
 //=== End File Prolog =========================================================
 
-package coordtlx.coords;
+package coordtxl.coords;
 
 import java.awt.geom.Point2D;
 

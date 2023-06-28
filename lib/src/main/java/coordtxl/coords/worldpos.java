@@ -119,7 +119,7 @@
     7) D.Mink changed input to data structure and implemented rotation matrix.
 */
 
-package coordtlx.coords;
+package coordtxl.coords;
 
 import java.awt.geom.*;
 

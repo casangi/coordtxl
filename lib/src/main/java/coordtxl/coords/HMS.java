@@ -2,7 +2,7 @@
  * $Id: HMS.java,v 1.4 2009/04/21 13:31:17 abrighto Exp $
  */
 
-package coordtlx.coords;
+package coordtxl.coords;
 
 import coordtxl.util.StringUtil;
 
