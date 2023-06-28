@@ -4,6 +4,11 @@ Setup
 
 You can setup this project by running :code:`gradle wrapper`.
 
+Build Java Library
+------------------
+
+You can build the Java library (:code:`coordtxl-core.jar`) by running :code:`gradle jar`.
+
 Running Tests
 -------------
 
