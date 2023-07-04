@@ -28,7 +28,6 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.AbstractMap;
 import coordtxl.coords.WCSKeywordProvider;
-import java.util.stream.Collectors;
 
 public class MapKeywordProvider implements WCSKeywordProvider {
 
@@ -106,14 +105,22 @@ public class MapKeywordProvider implements WCSKeywordProvider {
                 sb.append("\"");
             } else {
                 // Quote elements of list of strings
-                if ( o instanceof List &&
+/*              if ( o instanceof List &&
                      ((List)o).size( ) > 0 &&
-                     ((List)o).get(0) instanceof String ) {
-                    sb.append( "[" );
-                    sb.append( ((List<String>)o).stream( )
-                               .map(s -> "\"" + s + "\"")
-                               .collect(Collectors.joining(", ")) );
-                    sb.append( "]" );
+                     ((List)o).get(0) instanceof String ) { */
+                if ( o instanceof List ) {
+                    List lst = (List) o;
+                    String str = "[";
+                    for ( int i=0; i < lst.size( ); ++i ) {
+                        if ( i != 0 ) str += ", ";
+                        Object ele = lst.get(i);
+                        if ( ele instanceof String )
+                            str += "\"" + ele + "\"";
+                        else
+                            str += ele;
+                    }
+                    str += "]";
+                    sb.append(str);
                 } else sb.append(o);
             }
         }

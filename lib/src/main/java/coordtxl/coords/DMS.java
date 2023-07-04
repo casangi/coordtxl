@@ -5,11 +5,7 @@
 package coordtxl.coords;
 
 import coordtxl.util.StringUtil;
-
 import java.io.Serializable;
-import java.text.NumberFormat;
-import java.util.Locale;
-import java.util.StringTokenizer;
 
 /**
  * Class representing a value of the form "deg:min:sec".
@@ -30,21 +26,61 @@ public class DMS implements Serializable {
      */
     private static final Double MINUS_ZERO = -0.0;
 
-    // Number formats for 2 digit degrees and minutes
-    private static final NumberFormat NF = NumberFormat.getInstance(Locale.US);
+    // Number formats for 2 digit hours and minutes. Replaces:
+    //
+    //     NumberFormat NF = NumberFormat.getInstance(Locale.US)
+    //     NF.setMinimumIntegerDigits(2);
+    //     NF.setMaximumIntegerDigits(2);
+    //     NF.setMaximumFractionDigits(0);
+    //
+    private static String fmt_deg_min( double d ) {
+        double dbl = Math.round(d);
+        String dblv[] = Double.toString(dbl).split("\\.");
+        if ( dblv.length < 1 ) return "00";
 
-    // Number formats for seconds
-    private static final NumberFormat NF_SEC = NumberFormat.getInstance(Locale.US);
+        String result = "";
+        for ( int padding = dblv[0].length( ); padding < 2; ++padding ) {
+            result += "0";
+        }
+        for ( int number = dblv[0].length( ) > 2 ? dblv[0].length( ) - 2 : 0;
+              number < dblv[0].length( ); ++number ) {
+            result += dblv[0].charAt(number);
+        }
+        return result;
+    }
 
-    static {
-        NF.setMinimumIntegerDigits(2);
-        NF.setMaximumIntegerDigits(2);
-        NF.setMaximumFractionDigits(0);
+    // Number formats for seconds with 2 digits and 3 decimal
+    // places. Replaces:
+    //
+    //     NumberFormat NF_SEC = NumberFormat.getInstance(Locale.US);
+    //     NF_SEC.setMinimumIntegerDigits(2);
+    //     NF_SEC.setMaximumIntegerDigits(2);
+    //     NF_SEC.setMinimumFractionDigits(2);
+    //     NF_SEC.setMaximumFractionDigits(2);
+    //
+    private static String fmt_sec( double d ) {
+        double dbl = Math.round(d * 100.0) / 100.0;
+        String dblv[] = Double.toString(dbl).split("\\.");
 
-        NF_SEC.setMinimumIntegerDigits(2);
-        NF_SEC.setMaximumIntegerDigits(2);
-        NF_SEC.setMinimumFractionDigits(2);
-        NF_SEC.setMaximumFractionDigits(2);
+        if ( dblv.length == 0 ) return "00.00";
+        else if ( dblv.length < 2 ) return dblv[0] + ".00";
+        String result = "";
+        for ( int padding = dblv[0].length( ); padding < 2; ++padding ) {
+            result += "0";
+        }
+        for ( int number = dblv[0].length( ) > 2 ? dblv[0].length( ) - 2 : 0;
+              number < dblv[0].length( ); ++number ) {
+            result += dblv[0].charAt(number);
+        }
+        result += ".";
+        int decimal = 0;
+        for ( ; decimal < 2 && decimal < dblv[1].length( ); ++decimal ) {
+            result += dblv[1].charAt(decimal);
+        }
+        for ( ; decimal < 2; ++decimal ) {
+            result += "0";
+        }
+        return result;
     }
 
     /**
@@ -110,12 +146,11 @@ public class DMS implements Serializable {
     public DMS(String s) {
         s = StringUtil.replace(s, ",", "."); // Treat ',' like '.', by request
         double[] vals = {0.0, 0.0, 0.0};
-        StringTokenizer tok = new StringTokenizer(s, ": ");
+        String[] toks = s.split(":| ");
         int n = 0;
-        while (n < 3 && tok.hasMoreTokens()) {
-            vals[n++] = Double.valueOf(tok.nextToken());
+        while ( n < 3 && n < toks.length ) {
+            vals[n++] = Double.valueOf(toks[n]);
         }
-
         if (n >= 2) {
             set(vals[0], (int) vals[1], vals[2]);
         } else if (n == 1) {
@@ -175,7 +210,7 @@ public class DMS implements Serializable {
      * The seconds are formatted with 2 digits precission.
      */
     public String toString() {
-        String secs = NF_SEC.format(sec);
+        String secs = fmt_sec(sec);
 
         // sign
         String signStr;
@@ -186,9 +221,9 @@ public class DMS implements Serializable {
         }
 
         return signStr
-                + NF.format(degrees)
+                + fmt_deg_min(degrees)
                 + ":"
-                + NF.format(min)
+                + fmt_deg_min(min)
                 + ":"
                 + secs;
     }
@@ -211,9 +246,9 @@ public class DMS implements Serializable {
         }
 
         return signStr
-                + NF.format(degrees)
+                + fmt_deg_min(degrees)
                 + ":"
-                + NF.format(min);
+                + fmt_deg_min(min);
     }
 
     /**

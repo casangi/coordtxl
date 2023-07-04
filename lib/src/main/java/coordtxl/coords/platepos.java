@@ -51,7 +51,7 @@
 
 package coordtxl.coords;
 
-import java.awt.geom.*;
+import java.awt.geom.Point2D;
 
 public class platepos {
 

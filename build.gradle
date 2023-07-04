@@ -1,0 +1,98 @@
+import org.jsweet.transpiler.EcmaScriptComplianceLevel;
+
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+
+group = 'org.jsweet'
+version = "3.1.0"
+
+description = """Coordinate translation library"""
+
+// java compatibility version
+sourceCompatibility = 1.11
+targetCompatibility = 1.11
+
+
+buildscript {
+        ext {
+                JSweetVersion = "3.1.0"
+        }
+        
+        boolean snapshotMode = false;
+        project.ext.repoType =  snapshotMode ? 'snapshot' : 'release';
+
+        println "repoType=" + project.repoType + " JSweetVersion=${JSweetVersion}"
+
+        repositories {
+                mavenLocal()
+                mavenCentral()
+                maven {
+                      url "http://repository.jsweet.org/artifactory/libs-" + project.repoType + "-local"
+                      allowInsecureProtocol = true
+                }
+                maven {
+                      url "http://repository.jsweet.org/artifactory/plugins-" + project.repoType + "-local"
+                      allowInsecureProtocol = true
+                }
+                maven {
+                      url "http://repository.jsweet.org/artifactory/libs-release-local"
+                      allowInsecureProtocol = true
+                }
+                maven {
+                      url "http://repository.jsweet.org/artifactory/plugins-release-local"
+                      allowInsecureProtocol = true
+                }
+        }
+        dependencies {
+                classpath("org.jsweet:jsweet-gradle-plugin:" + JSweetVersion) { transitive = true }
+        }
+}
+
+repositories {
+        mavenCentral()
+        maven {
+              url "http://repository.jsweet.org/artifactory/libs-" + project.repoType + "-local"
+              allowInsecureProtocol = true
+        }
+        maven {
+              url "http://repository.jsweet.org/artifactory/libs-release-local"
+              allowInsecureProtocol = true
+        }
+}
+
+dependencies {
+        implementation group: 'org.jsweet', name: 'jsweet-transpiler', version: project.version
+        implementation group: 'org.jsweet', name: 'jsweet-core', version: "6.3.0"
+        implementation group: 'org.jsweet.candies', name: 'angular', version: "1.4.0-20201211"
+        implementation 'org.jsweet.candies.j4ts:j4ts-awtgeom:1.8.132-20170726'
+//      implementation group: 'org.jsweet.candies', name: 'angular', version: "1.4.0-20201211"
+//      implementation group: 'org.jsweet.candies', name: 'angular-route', version: "1.2.0-20201211"
+//      implementation group: 'org.jsweet.candies', name: 'backbone', version:"1.3.0-20201211"
+//      implementation group: 'org.jsweet.candies', name: 'knockout', version:"3.4.0-20170726"
+        // Allows us to use 'marked', a Markdown to HTML converter: https://github.com/chjj/marked
+//      implementation group: 'org.jsweet.candies', name: 'marked', version: "0.0.0-20170726"
+}
+
+
+/*****************************************************
+compileJava {
+        enabled = false
+}
+*****************************************************/
+
+apply plugin: 'org.jsweet.jsweet-gradle-plugin'
+
+jsweet {
+      //module = 'commonjs'
+      //module = 'umd'
+      //module = 'amd'
+      //module = 'system'
+        targetVersion = 'ES5'
+        verbose = true
+        encoding = 'UTF-8'
+        sourceMap = true
+        sourceRoot = project.file('lib/src')
+        outDir = project.file('target/js')
+        //targetVersion = EcmaScriptComplianceLevel.ES6
+        includes = ['**/coordtxl/**/*.java', '**/def/**/*.java']
+}

@@ -137,7 +137,7 @@ public class WCSTransform implements WorldCoordinateConverter {
      * Message if header does not contain a valid World Coordinate System
      */
     public static final String NO_WCS_IN_HEADER_MESSAGE // 00/23/06 Added for OPR 41378, jDoggett
-            = "The header does not contain a valid world coordinate system.".intern();
+            = "The header does not contain a valid world coordinate system.";
 
     /**
      * Conversions among hours of RA, degrees and radians.
