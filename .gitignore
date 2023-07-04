@@ -28,5 +28,4 @@ replay_pid*
 
 # gradle files
 .gradle/
-gradle/
 lib/build/
