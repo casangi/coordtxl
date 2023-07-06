@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @author Allan Brighton
  * @version $Revision: 1.4 $
  *
- * Portions copyright (C) 2023
+ * Portions of this file Copyright (C) 2023
  * Associated Universities, Inc. Washington DC, USA.
  *
  */

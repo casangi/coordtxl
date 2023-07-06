@@ -12,6 +12,9 @@ import java.io.Serializable;
  *
  * @author Allan Brighton
  * @version $Revision: 1.4 $
+ *
+ * Portions of this file Copyright (C) 2023
+ * Associated Universities, Inc. Washington DC, USA.
  */
 public class DMS implements Serializable {
 
