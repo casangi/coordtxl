@@ -42,7 +42,7 @@
 
 package coordtxl.coords;
 
-import java.awt.geom.Point2D;
+import coordtxl.geom.Point2D;
 
 public class slasubs {
 
@@ -130,7 +130,7 @@ public class slasubs {
     **
     **  P.T.Wallace   Starlink   31 October 1993
     */
-    public static Point2D.Double slaDcc2s(double[] v) {
+    public static Point2D slaDcc2s(double[] v) {
         double x, y, z, r;
 
         x = v[0];
@@ -138,7 +138,7 @@ public class slasubs {
         z = v[2];
         r = Math.sqrt(x * x + y * y);
 
-        Point2D.Double result = new Point2D.Double();
+        Point2D result = new Point2D();
 
         result.x = (r != 0.0) ? Math.atan2(y, x) : 0.0;
         result.y = (z != 0.0) ? Math.atan2(z, r) : 0.0;

@@ -15,6 +15,7 @@ import java.lang.reflect.Type;
 import coordtxl.coords.WCSTransform;
 import coordtxl.coords.WorldCoords;
 import coordtxl.coords.MapKeywordProvider;
+import coordtxl.geom.Point2D;
 import java.util.Map;
 import java.util.AbstractMap;
 import java.util.Set;
@@ -24,7 +25,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.math.BigDecimal;
-import java.awt.geom.Point2D;
 
 public class CasaImageLabelTest {
 
@@ -386,7 +386,7 @@ public class CasaImageLabelTest {
         WCSTransform wcs = new WCSTransform(kwp);
         System.out.println("------------------------------------------------------------------------------------------------------------------------");
         assertTrue( wcs.isWCS( ), "WCSTransform is not correctly configured" );
-        Point2D.Double p = new Point2D.Double(0.0,0.0);
+        Point2D p = new Point2D(0.0,0.0);
         wcs.imageToWorldCoords(p,false);
         System.out.println(p);
         System.out.println(new WorldCoords(p.getX( ),p.getY( )));

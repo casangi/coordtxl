@@ -41,7 +41,7 @@
 
 package coordtxl.coords;
 
-import java.awt.geom.Point2D;
+import coordtxl.geom.Point2D;
 
 /**
  * A port of pieces of the WCSTools library version 2.6, originally written in C.
@@ -131,7 +131,7 @@ public class WCSTransform implements WorldCoordinateConverter {
     double fHeightDeg;
 
     // allan: added for quick access to degrees per pixel
-    Point2D.Double degPerPixel;
+    Point2D degPerPixel;
 
     /**
      * Message if header does not contain a valid World Coordinate System
@@ -672,23 +672,23 @@ public class WCSTransform implements WorldCoordinateConverter {
     /**
      * Return the center RA,DEC coordinates in deg.
      */
-    public Point2D.Double getWCSCenter() {
+    public Point2D getWCSCenter() {
         if (isValid()) {
-            return new Point2D.Double(fCenterRa, fCenterDec);
+            return new Point2D(fCenterRa, fCenterDec);
         }
         throw new RuntimeException("No WCS information.");
     }
 
     /** Set the center RA,Dec coordinates in degrees in the current equinox. */
-    ///public void setWCSCenter(Point2D.Double p) {
+    ///public void setWCSCenter(Point2D p) {
     //wcsshift(p.x, p.y, radecsys);
     //}
 
     /**
      * Return the center coordinates in image pixels.
      */
-    public Point2D.Double getImageCenter() {
-        return new Point2D.Double(0.5 * nxpix, 0.5 * nypix);
+    public Point2D getImageCenter() {
+        return new Point2D(0.5 * nxpix, 0.5 * nypix);
     }
 
     /**
@@ -708,7 +708,7 @@ public class WCSTransform implements WorldCoordinateConverter {
      * @param isDistance True if p should be interpreted as a distance instead
      *                   of a point.
      */
-    public void imageToWorldCoords(Point2D.Double p, boolean isDistance) {
+    public void imageToWorldCoords(Point2D p, boolean isDistance) {
         if (!isValid()) {
             return;
         }
@@ -717,7 +717,7 @@ public class WCSTransform implements WorldCoordinateConverter {
             p.x = Math.abs(p.x * degPerPixel.x);
             p.y = Math.abs(p.y * degPerPixel.y);
         } else {
-            Point2D.Double r = pix2wcs(p.x, p.y);
+            Point2D r = pix2wcs(p.x, p.y);
             if (r != null) {
                 p.setLocation(r.x, r.y);
             } else {
@@ -734,7 +734,7 @@ public class WCSTransform implements WorldCoordinateConverter {
      * @param isDistance True if p should be interpreted as a distance instead
      *                   of a point.
      */
-    public void worldToImageCoords(Point2D.Double p, boolean isDistance) {
+    public void worldToImageCoords(Point2D p, boolean isDistance) {
         if (!isValid()) {
             return;
         }
@@ -743,7 +743,7 @@ public class WCSTransform implements WorldCoordinateConverter {
             p.x = Math.abs(p.x / degPerPixel.x);
             p.y = Math.abs(p.y / degPerPixel.y);
         } else {
-            Point2D.Double r = wcs2pix(p.x, p.y);
+            Point2D r = wcs2pix(p.x, p.y);
             if (r != null) {
                 p.setLocation(r.x, r.y);
             } else {
@@ -915,7 +915,7 @@ public class WCSTransform implements WorldCoordinateConverter {
             xpix = 0.5 * this.nxpix;
             ypix = 0.5 * this.nypix;
 
-            Point2D.Double center = pix2wcs(xpix, ypix);
+            Point2D center = pix2wcs(xpix, ypix);
             if (center == null) {
                 return;
             }
@@ -924,8 +924,8 @@ public class WCSTransform implements WorldCoordinateConverter {
             fCenterDec = center.y;
 
             // Compute image half-width in degrees of right ascension
-            Point2D.Double pos1 = pix2wcs(1.0, ypix);
-            Point2D.Double pos2 = pix2wcs(this.nxpix, ypix);
+            Point2D pos1 = pix2wcs(1.0, ypix);
+            Point2D pos2 = pix2wcs(this.nxpix, ypix);
             if (pos1 == null || pos2 == null) {
                 return;
             }
@@ -967,7 +967,7 @@ public class WCSTransform implements WorldCoordinateConverter {
             xpix = 0.5 * this.nxpix;
             ypix = 0.5 * this.nypix;
 
-            Point2D.Double center = pix2wcs(xpix, ypix);
+            Point2D center = pix2wcs(xpix, ypix);
             if (center == null) {
                 return;
             }
@@ -978,9 +978,9 @@ public class WCSTransform implements WorldCoordinateConverter {
             // Compute image width in degrees
 
             // Chris S. changed 1.0 to 0.0
-            //Point2D.Double pos1 = pix2wcs(1.0, ypix);
-            Point2D.Double pos1 = pix2wcs(0.0, ypix);
-            Point2D.Double pos2 = pix2wcs(this.nxpix, ypix);
+            //Point2D pos1 = pix2wcs(1.0, ypix);
+            Point2D pos1 = pix2wcs(0.0, ypix);
+            Point2D pos2 = pix2wcs(this.nxpix, ypix);
             if (pos1 == null || pos2 == null) {
                 return;
             }
@@ -1010,7 +1010,7 @@ public class WCSTransform implements WorldCoordinateConverter {
                 fHeightDeg = Math.sqrt(((pos2.y - pos1.y) * (pos2.y - pos1.y)) +
                         ((pos2.x - pos1.x) * (pos2.x - pos1.x)));
             }
-            degPerPixel = new Point2D.Double(fWidthDeg / nxpix, fHeightDeg / nypix);
+            degPerPixel = new Point2D(fWidthDeg / nxpix, fHeightDeg / nypix);
         }
     }
 
@@ -1060,8 +1060,8 @@ public class WCSTransform implements WorldCoordinateConverter {
      * Converts pixel coordinates to World Coordinates.
      * Returns null if the WCSTransform is not valid.
      */
-    public Point2D.Double pix2wcs(double xpix, double ypix) {
-        Point2D.Double position;
+    public Point2D pix2wcs(double xpix, double ypix) {
+        Point2D position;
 
         if (!isValid()) {
             return null;
@@ -1117,8 +1117,8 @@ public class WCSTransform implements WorldCoordinateConverter {
      * Returns null if the WCSTransform is invalid, or if the
      * WCS position does not fall within the image.
      */
-    public Point2D.Double wcs2pix(double xpos, double ypos) {
-        Point2D.Double pixels;
+    public Point2D wcs2pix(double xpos, double ypos) {
+        Point2D pixels;
 
         if (!isValid()) {
             return null;
@@ -1127,7 +1127,7 @@ public class WCSTransform implements WorldCoordinateConverter {
         this.xpos = xpos;
         this.ypos = ypos;
 
-        Point2D.Double position = new Point2D.Double(xpos, ypos);
+        Point2D position = new Point2D(xpos, ypos);
 
         // Convert coordinates to same system as image
         if (this.changesys == 1) {

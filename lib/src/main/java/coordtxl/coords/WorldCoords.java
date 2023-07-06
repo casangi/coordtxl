@@ -10,7 +10,7 @@
 
 package coordtxl.coords;
 
-import java.awt.geom.Point2D;
+import coordtxl.geom.Point2D;
 import java.io.Serializable;
 
 /**
@@ -95,7 +95,7 @@ public class WorldCoords implements WorldCoordinates, Serializable {
      *
      * @param p The RA,Dec point in degrees
      */
-    public WorldCoords(Point2D.Double p, double equinox) {
+    public WorldCoords(Point2D p, double equinox) {
         this(p.getX(), p.getY(), equinox);
     }
 
@@ -104,7 +104,7 @@ public class WorldCoords implements WorldCoordinates, Serializable {
      *
      * @param p The RA,Dec point in degrees
      */
-    public WorldCoords(Point2D.Double p) {
+    public WorldCoords(Point2D p) {
         this(p.getX(), p.getY(), 2000.);
     }
 

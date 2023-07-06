@@ -58,7 +58,7 @@
 
 package coordtxl.coords;
 
-import java.awt.geom.Point2D;
+import coordtxl.geom.Point2D;
 
 @SuppressWarnings({"SuspiciousNameCombination"})
 public class wcscon {
@@ -93,12 +93,12 @@ public class wcscon {
 
     /* Right ascension in degrees (J2000 in, B1950 out) */
     /* Declination in degrees (J2000 in, B1950 out) */
-    public static Point2D.Double fk524(Point2D.Double input) {
+    public static Point2D fk524(Point2D input) {
         /* Proper motion in right ascension */
         /* Proper motion in declination  */
         /* In:  deg/jul.yr.  Out: deg/trop.yr.  */
 
-        Point2D.Double pm = new Point2D.Double(0.0, 0.0);
+        Point2D pm = new Point2D(0.0, 0.0);
 
         return fk524m(input, pm);
     }
@@ -106,14 +106,14 @@ public class wcscon {
     /* Right ascension in degrees (J2000 in, B1950 out) */
     /* Declination in degrees (J2000 in, B1950 out) */
     /* Besselian epoch in years */
-    public static Point2D.Double fk524e(Point2D.Double input, double epoch) {
+    public static Point2D fk524e(Point2D input, double epoch) {
         /* Proper motion in right ascension */
         /* Proper motion in declination  */
         /* In:  deg/jul.yr.  Out: deg/trop.yr.  */
 
-        Point2D.Double pm = new Point2D.Double(0.0, 0.0);
+        Point2D pm = new Point2D(0.0, 0.0);
 
-        Point2D.Double output = fk524m(input, pm);
+        Point2D output = fk524m(input, pm);
 
         output.x = output.x + (pm.x * (epoch - 1950.0));
         output.y = output.y + (pm.y * (epoch - 1950.0));
@@ -183,7 +183,7 @@ public class wcscon {
 
        P.T.Wallace   Starlink   27 October 1987
        Doug Mink     Smithsonian Astrophysical Observatory  7 June 1995 */
-    public static Point2D.Double fk524m(Point2D.Double input, Point2D.Double pm) {
+    public static Point2D fk524m(Point2D input, Point2D pm) {
         double r2000,d2000;	/* J2000.0 ra,dec (radians) */
         double dr2000,dd2000;	/* J2000.0 proper motions (rad/jul.yr)*/
         double r1950,d1950;	/* B1950.0 ra,dec (rad) */
@@ -325,12 +325,12 @@ public class wcscon {
 
     /* Right ascension in degrees (B1950 in, J2000 out) */
     /* Declination in degrees (B1950 in, J2000 out) */
-    public static Point2D.Double fk425(Point2D.Double input) {
+    public static Point2D fk425(Point2D input) {
         /* Proper motion in right ascension */
         /* Proper motion in declination  */
         /* In: rad/trop.yr.  Out:  rad/jul.yr. */
 
-        Point2D.Double pm = new Point2D.Double(0.0, 0.0);
+        Point2D pm = new Point2D(0.0, 0.0);
 
         return fk425m(input, pm);
     }
@@ -338,14 +338,14 @@ public class wcscon {
     /* Right ascension in degrees (B1950 in, J2000 out) */
     /* Declination in degrees (B1950 in, J2000 out) */
     /* Besselian epoch in years */
-    public static Point2D.Double fk425e(Point2D.Double input, double epoch) {
+    public static Point2D fk425e(Point2D input, double epoch) {
         /* Proper motion in right ascension */
         /* Proper motion in declination  */
         /* In: rad/trop.yr.  Out:  rad/jul.yr. */
 
-        Point2D.Double pm = new Point2D.Double(0.0, 0.0);
+        Point2D pm = new Point2D(0.0, 0.0);
 
-        Point2D.Double output = fk425m(input, pm);
+        Point2D output = fk425m(input, pm);
 
         output.x = output.x + (pm.x * (epoch - 2000.0));
         output.y = output.y + (pm.y * (epoch - 2000.0));
@@ -414,7 +414,7 @@ public class wcscon {
 
        P.T.Wallace   Starlink   27 October 1987
        Doug Mink     Smithsonian Astrophysical Observatory  7 June 1995 */
-    public static Point2D.Double fk425m(Point2D.Double input, Point2D.Double pm) {
+    public static Point2D fk425m(Point2D input, Point2D pm) {
         double r1950,d1950;	/* B1950.0 ra,dec (rad) */
         double dr1950,dd1950;	/* B1950.0 proper motions (rad/trop.yr) */
         double r2000,d2000;	/* J2000.0 ra,dec (rad) */
@@ -555,7 +555,7 @@ public class wcscon {
                 is required.
                 Reference: blaauw et al, MNRAS,121,123 (1960) */
 
-    public static Point2D.Double fk42gal(Point2D.Double input) {
+    public static Point2D fk42gal(Point2D input) {
         double pos[] = new double[3],pos1[] = new double[3],dl,db,rra,rdec,dra,ddec;
         int i;
 
@@ -568,8 +568,8 @@ public class wcscon {
         /*	call jpabe (rra,rdec,-1,idg) */
 
         /*  Spherical to Cartesian */
-        Point2D.Double pos0 = new Point2D.Double();
-        Point2D.Double pos2 = new Point2D.Double();
+        Point2D pos0 = new Point2D();
+        Point2D pos2 = new Point2D();
         jpcop(rra, rdec, 1.0, pos0, pos2);
         pos[0] = pos0.x;
         pos[1] = pos0.y;
@@ -581,8 +581,8 @@ public class wcscon {
         }
 
         /*  Cartesian to spherical */
-        Point2D.Double rPos = new Point2D.Double();
-        Point2D.Double r = new Point2D.Double();
+        Point2D rPos = new Point2D();
+        Point2D r = new Point2D();
         jpcon(pos1, rPos, r);
 
         dl = WCSTransform.raddeg(rPos.x);
@@ -616,7 +616,7 @@ public class wcscon {
            is required.
         Reference:  Blaauw et al, MNRAS,121,123 (1960) */
 
-    public static Point2D.Double gal2fk4(Point2D.Double input) {
+    public static Point2D gal2fk4(Point2D input) {
         double pos[] = new double[3],pos1[] = new double[3],dl,db,rl,rb,dra,ddec;
         int i;
 
@@ -626,8 +626,8 @@ public class wcscon {
         rl = WCSTransform.degrad(dl);
         rb = WCSTransform.degrad(db);
 
-        Point2D.Double pos0 = new Point2D.Double();
-        Point2D.Double pos2 = new Point2D.Double();
+        Point2D pos0 = new Point2D();
+        Point2D pos2 = new Point2D();
         jpcop(rl, rb, 1.0, pos0, pos2);
         pos[0] = pos0.x;
         pos[1] = pos0.y;
@@ -639,8 +639,8 @@ public class wcscon {
         }
 
         /*  cartesian to spherical */
-        Point2D.Double rPos = new Point2D.Double();
-        Point2D.Double r = new Point2D.Double();
+        Point2D rPos = new Point2D();
+        Point2D r = new Point2D();
         jpcon(pos1, rPos, r);
 
         /*  introduce e-terms */
@@ -693,7 +693,7 @@ public class wcscon {
             GAL2FK4 if conversion from B1950 FK4 coordinates is required.
         Reference: Blaauw et al, MNRAS,121,123 (1960) */
 
-    public static Point2D.Double fk52gal(Point2D.Double input) {
+    public static Point2D fk52gal(Point2D input) {
         double pos[] = new double[3],pos1[] = new double[3],dl,db,rra,rdec,dra,ddec;
         int i;
 
@@ -703,8 +703,8 @@ public class wcscon {
         rra = WCSTransform.degrad(dra);
         rdec = WCSTransform.degrad(ddec);
 
-        Point2D.Double pos0 = new Point2D.Double();
-        Point2D.Double pos2 = new Point2D.Double();
+        Point2D pos0 = new Point2D();
+        Point2D pos2 = new Point2D();
         jpcop(rra, rdec, 1.0, pos0, pos2);
         pos[0] = pos0.x;
         pos[1] = pos0.y;
@@ -716,8 +716,8 @@ public class wcscon {
         }
 
         /*  Cartesian to spherical */
-        Point2D.Double rPos = new Point2D.Double();
-        Point2D.Double r = new Point2D.Double();
+        Point2D rPos = new Point2D();
+        Point2D r = new Point2D();
         jpcon(pos1, rPos, r);
 
         dl = WCSTransform.raddeg(rPos.x);
@@ -750,7 +750,7 @@ public class wcscon {
            if conversion to J2000 coordinates is required.
         Reference: Blaauw et al, MNRAS,121,123 (1960) */
 
-    public static Point2D.Double gal2fk5(Point2D.Double input) {
+    public static Point2D gal2fk5(Point2D input) {
         double pos[] = new double[3],pos1[] = new double[3],dl,db,rl,rb,dra,ddec;
         int i;
 
@@ -760,8 +760,8 @@ public class wcscon {
         rl = WCSTransform.degrad(dl);
         rb = WCSTransform.degrad(db);
 
-        Point2D.Double pos0 = new Point2D.Double();
-        Point2D.Double pos2 = new Point2D.Double();
+        Point2D pos0 = new Point2D();
+        Point2D pos2 = new Point2D();
         jpcop(rl, rb, 1.0, pos0, pos2);
         pos[0] = pos0.x;
         pos[1] = pos0.y;
@@ -773,8 +773,8 @@ public class wcscon {
         }
 
         /*  Cartesian to Spherical */
-        Point2D.Double rPos = new Point2D.Double();
-        Point2D.Double r = new Point2D.Double();
+        Point2D rPos = new Point2D();
+        Point2D r = new Point2D();
         jpcon(pos1, rPos, r);
 
         dra = WCSTransform.raddeg(rPos.x);
@@ -802,7 +802,7 @@ public class wcscon {
     /* Right ascension in radians */
     /* Declination in radians */
     /* Distance to object in same units as pos */
-    protected static void jpcon(double pos[], Point2D.Double rPos, Point2D.Double r) {
+    protected static void jpcon(double pos[], Point2D rPos, Point2D r) {
         double x,y,z,rxy,rxy2,z2;
 
         x = pos[0];
@@ -829,7 +829,7 @@ public class wcscon {
     /* Distance to object in same units as pos */
     /* x,y,z geocentric equatorial position of object */
 
-    protected static void jpcop(double rra, double rdec, double r, Point2D.Double result0, Point2D.Double result2) {
+    protected static void jpcop(double rra, double rdec, double r, Point2D result0, Point2D result2) {
         result0.x = r * Math.cos(rra) * Math.cos(rdec);
         result0.y = r * Math.sin(rra) * Math.cos(rdec);
         result2.x = r * Math.sin(rdec);
@@ -854,7 +854,7 @@ public class wcscon {
     **
     **  P.T.Wallace   Starlink   22 December 1993
     */
-    public static Point2D.Double fk4prec(double ep0, double ep1, Point2D.Double input) {
+    public static Point2D fk4prec(double ep0, double ep1, Point2D input) {
         double rra = WCSTransform.degrad(input.x);
         double rdec = WCSTransform.degrad(input.y);
 
@@ -868,7 +868,7 @@ public class wcscon {
         double[] v2 = slasubs.slaDmxv(pm, v1);
 
         /* Back to RA,Dec */
-        Point2D.Double rPoint = slasubs.slaDcc2s(v2);
+        Point2D rPoint = slasubs.slaDcc2s(v2);
         rra = rPoint.x;
         rdec = rPoint.y;
 
@@ -897,7 +897,7 @@ public class wcscon {
     **
     **  P.T.Wallace   Starlink   22 December 1993
     */
-    public static Point2D.Double fk5prec(double ep0, double ep1, Point2D.Double input) {
+    public static Point2D fk5prec(double ep0, double ep1, Point2D input) {
         double rra = WCSTransform.degrad(input.x);
         double rdec = WCSTransform.degrad(input.y);
 
@@ -911,7 +911,7 @@ public class wcscon {
         double[] v2 = slasubs.slaDmxv(pm, v1);
 
         /* Back to RA,Dec */
-        Point2D.Double rPoint = slasubs.slaDcc2s(v2);
+        Point2D rPoint = slasubs.slaDcc2s(v2);
         rra = rPoint.x;
         rdec = rPoint.y;
 

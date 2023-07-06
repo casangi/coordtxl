@@ -51,7 +51,7 @@
 
 package coordtxl.coords;
 
-import java.awt.geom.Point2D;
+import coordtxl.geom.Point2D;
 
 public class platepos {
 
@@ -76,7 +76,7 @@ public class platepos {
     /* Output: */
     /* Right ascension or longitude in degrees */
     /* Declination or latitude in degrees */
-    public static Point2D.Double getPosition(double xpix, double ypix, WCSTransform wcs) {
+    public static Point2D getPosition(double xpix, double ypix, WCSTransform wcs) {
         double x, y, xmm, ymm, xmm2, ymm2, xmm3, ymm3, x2y2;
         double xi, xir, eta, etar, raoff, ra, dec;
         double ctan, ccos;
@@ -143,7 +143,7 @@ public class platepos {
 
         dec = Math.atan(Math.cos(raoff) / ((1.0 - (etar * ctan)) / (etar + ctan)));
 
-        return new Point2D.Double(ra / COND2R, dec / COND2R);
+        return new Point2D(ra / COND2R, dec / COND2R);
     }
 
     /* Routine to determine pixel coordinates for sky position */
@@ -155,7 +155,7 @@ public class platepos {
     /* Output: */
     /* x pixel number  (RA or long without rotation) */
     /* y pixel number  (dec or lat without rotation) */
-    public static Point2D.Double getPixels(double xpos, double ypos, WCSTransform wcs) {
+    public static Point2D getPixels(double xpos, double ypos, WCSTransform wcs) {
         double div,xi,eta,x,y,xy,x2,y2,x2y,y2x,x3,y3,x4,y4,x2y2,cjunk,dx,dy;
         double sypos,cypos,syplate,cyplate,sxdiff,cxdiff;
         double f,fx,fy,g,gx,gy, xmm, ymm;
@@ -290,7 +290,7 @@ public class platepos {
         // XXXif (ypix < 0.5 || ypix > wcs.nypix+0.5)
         //	return null;
 
-        return new Point2D.Double(xpix, ypix);
+        return new Point2D(xpix, ypix);
     }
 
     /* Mar  6 1995	Original version of this code

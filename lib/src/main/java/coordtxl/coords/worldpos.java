@@ -121,7 +121,7 @@
 
 package coordtxl.coords;
 
-import java.awt.geom.Point2D;
+import coordtxl.geom.Point2D;
 
 public class worldpos {
 
@@ -135,7 +135,7 @@ public class worldpos {
     /* Output: */
     /* x (RA) coordinate (deg) */
     /* y (dec) coordinate (deg) */
-    public static Point2D.Double getPosition(double xpix, double ypix, WCSTransform wcs) {
+    public static Point2D getPosition(double xpix, double ypix, WCSTransform wcs) {
         double cosr, sinr, dx, dy, dz, tx;
         double sins, coss, dect = 0.0, rat = 0.0, dt, l, m, mg, da, dd, cos0, sin0;
         double dec0, ra0, decout, raout;
@@ -199,7 +199,7 @@ public class worldpos {
         xpos = xref + dx;
         ypos = yref + dy;
         if (itype < 0) {
-            return new Point2D.Double(xpos, ypos);
+            return new Point2D(xpos, ypos);
         }
 
         /* Convert to radians  */
@@ -367,7 +367,7 @@ public class worldpos {
         xpos = WCSTransform.raddeg(raout);
         ypos = WCSTransform.raddeg(decout);
 
-        return new Point2D.Double(xpos, ypos);
+        return new Point2D(xpos, ypos);
     }  /* End of worldpos */
 
     /*-----------------------------------------------------------------------*/
@@ -383,7 +383,7 @@ public class worldpos {
     /* Output: */
     /* x pixel number  (RA or long without rotation) */
     /* y pixel number  (dec or lat without rotation) */
-    public static Point2D.Double getPixels(double xpos, double ypos, WCSTransform wcs) {
+    public static Point2D getPixels(double xpos, double ypos, WCSTransform wcs) {
         double dx, dy, ra0 = 0.0, dec0 = 0.0, ra = 0.0, dec = 0.0, coss = 0.0, sins = 0.0, dt, da, dd, sint = 0.0;
         double l = 0.0, m = 0.0, geo1, geo2, geo3, sinr, cosr, tx;
         double cond2r = 1.745329252e-2, deps = 1.0e-5, twopi = 6.28318530717959;
@@ -578,7 +578,7 @@ public class worldpos {
         double xpix = dx + xrefpix;
         double ypix = dy + yrefpix;
 
-        return new Point2D.Double(xpix, ypix);
+        return new Point2D(xpix, ypix);
     }  /* end worldpix */
 
     /* Oct 26 1995	Fix bug which interchanged RA and Dec twice when coorflip

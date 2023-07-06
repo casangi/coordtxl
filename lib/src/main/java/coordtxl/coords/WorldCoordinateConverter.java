@@ -4,9 +4,7 @@
 
 package coordtxl.coords;
 
-import java.awt.geom.Point2D;
-
-import javax.swing.event.ChangeListener;
+import coordtxl.geom.Point2D;
 
 
 /**
@@ -35,7 +33,7 @@ public abstract interface WorldCoordinateConverter {
      * @param isDistance True if p should be interpreted as a distance instead
      *                   of a point.
      */
-    public void imageToWorldCoords(Point2D.Double p, boolean isDistance);
+    public void imageToWorldCoords(Point2D p, boolean isDistance);
 
     /**
      * Convert the given world coordinates (degrees, in the equinox of the current image)
@@ -45,13 +43,13 @@ public abstract interface WorldCoordinateConverter {
      * @param isDistance True if p should be interpreted as a distance instead
      *                   of a point.
      */
-    public void worldToImageCoords(Point2D.Double p, boolean isDistance);
+    public void worldToImageCoords(Point2D p, boolean isDistance);
 
     /** Return the center RA,Dec coordinates in degrees. */
-    public Point2D.Double getWCSCenter();
+    public Point2D getWCSCenter();
 
     /** Set the center RA,Dec coordinates in degrees. */
-    //public void setWCSCenter(Point2D.Double p);
+    //public void setWCSCenter(Point2D p);
 
     /** return the width in deg */
     public double getWidthInDeg();
@@ -60,7 +58,7 @@ public abstract interface WorldCoordinateConverter {
     public double getHeightInDeg();
 
     /** Return the image center coordinates in pixels (image coordinates). */
-    public Point2D.Double getImageCenter();
+    public Point2D getImageCenter();
 
     /** Return the image width in pixels. */
     public double getWidth();
