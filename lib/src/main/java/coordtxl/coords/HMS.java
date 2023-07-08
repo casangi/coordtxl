@@ -39,7 +39,10 @@ public class HMS implements Serializable {
     //
     private static String fmt_hr_min( double d ) {
         double dbl = Math.round(d);
-        String dblv[] = Double.toString(dbl).split("\\.");
+        // Java's String.split(regex) takes a regular expression, but the code
+        // that JSweet generates uses a split which takes a literal string so
+        // split("\\.") works in Java but fails in the generated JavaScript
+        String dblv[] = Double.toString(dbl).replace(".","@").split("@");
         if ( dblv.length < 1 ) return "00";
 
         String result = "";
@@ -64,7 +67,10 @@ public class HMS implements Serializable {
     //
     private static String fmt_sec( double d ) {
         double dbl = Math.round(d * 1000.0) / 1000.0;
-        String dblv[] = Double.toString(dbl).split("\\.");
+        // Java's String.split(regex) takes a regular expression, but the code
+        // that JSweet generates uses a split which takes a literal string so
+        // split("\\.") works in Java but fails in the generated JavaScript
+        String dblv[] = Double.toString(dbl).replace(".","@").split("@");
 
         if ( dblv.length == 0 ) return "00.000";
         else if ( dblv.length < 2 ) return dblv[0] + ".000";
@@ -167,10 +173,14 @@ public class HMS implements Serializable {
     public HMS(String s, boolean hflag) {
         s = StringUtil.replace(s, ",", "."); // Treat ',' like '.', by request
         double[] vals = {0.0, 0.0, 0.0};
-        String[] toks = s.split(":| ");
+        // Java's String.split(regex) takes a regular expression, but the code
+        // that JSweet generates uses a split which takes a literal string so
+        // split(":| ") works in Java but fails in the generated JavaScript
+        String[] toks = s.replace(":","@").replace(" ","@").replace("@@","@").split("@");
         int n = 0;
         while ( n < 3 && n < toks.length ) {
-            vals[n++] = Double.valueOf(toks[n]);
+            vals[n] = Double.valueOf(toks[n]);
+            n += 1;
         }
         if (n >= 2) {
             set(vals[0], (int) vals[1], vals[2]);
@@ -322,52 +332,5 @@ public class HMS implements Serializable {
      */
     public boolean equals(Object obj) {
         return (obj instanceof HMS && val == ((HMS) obj).val);
-    }
-
-
-    /**
-     * Test cases
-     */
-    public static void main(String[] args) {
-
-        HMS h = new HMS(3, 19, 48.23);
-        System.out.println("HMS(3, 19, 48.23) == " + h + " == " + h.getVal());
-
-        if (!(h.equals(new HMS(h.getVal())))) {
-            System.out.println("Equality test failed: " + h + " != " + new HMS(h.getVal()));
-        }
-
-        h = new HMS(41, 30, 42.2);
-        System.out.println("41 30 42.2 = " + h + " = " + h.getVal() + " = " + new HMS(h.getVal()));
-
-        h = new HMS(-41, 30, 2.2);
-        System.out.println("-41 30 2.2 = " + h + " = " + h.getVal() + " = " + new HMS(h.getVal()));
-
-        h = new HMS("-41 30 42.2");
-        System.out.println("-41 30 42.2 = " + h + " = " + h.getVal() + " = " + new HMS(h.getVal()));
-
-        h = new HMS("1:01:02.34567");
-        System.out.println("1:01:02.34567 = " + h + " = " + h.getVal() + " = " + new HMS(h.getVal()));
-
-        h = new HMS("1:01:02.34567");
-        System.out.println("1:01:02.34567 = " + h + " = " + h.getVal() + " = " + new HMS(h.getVal()));
-
-        h = new HMS(-0., 15, 33.3333);
-        System.out.println("-0 15 33.3333 = " + h + " = " + h.getVal() + " = " + new HMS(h.getVal()));
-
-        h = new HMS(-0.0001);
-        System.out.println("-0.0001 = " + h + " = " + h.getVal() + " = " + new HMS(h.getVal()));
-
-        h = new HMS(121.39583332 / 15.);
-        System.out.println("121.39583332/15. = " + h + " = " + h.getVal() + " = " + new HMS(h.getVal()));
-
-        h = new HMS(121.09583332 / 15.);
-        System.out.println("121.09583332/15. = " + h + " = " + h.getVal() + " = " + new HMS(h.getVal()));
-
-        h = new HMS(-121.39583332 / 15.);
-        System.out.println("-121.39583332/15. = " + h + " = " + h.getVal() + " = " + new HMS(h.getVal()));
-
-        h = new HMS(-121.09583332 / 15.);
-        System.out.println("-121.09583332/15. = " + h + " = " + h.getVal() + " = " + new HMS(h.getVal()));
     }
 }
