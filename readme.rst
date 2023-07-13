@@ -14,7 +14,7 @@ This builds the core :code:`coordtxl` JAR file in :code:`build/libs/`. There is 
 
 * :code:`./gradlew nomtamJar`
 
-which builds a JAR file which depends on the `nom.tam.fits <https://github.com/nom-tam-fits/nom-tam-fits>`_ package. It has a FITS keyword handler based on the :code:`nom.tam.fits` header object.
+This builds a JAR file which depends on the `nom.tam.fits <https://github.com/nom-tam-fits/nom-tam-fits>`_ package. It has a FITS keyword handler based on the :code:`nom.tam.fits` header object.
 
 Running Tests
 -------------
