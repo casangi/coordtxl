@@ -5,10 +5,10 @@
     "moduleResolution": "node",
     "declaration": true,
     "strict": true,
-    "noImplicitAny": true /* Raise error on expressions and declarations with an implied 'any' type. */,
-    "strictNullChecks": true /* Enable strict null checks. */,
+    "noImplicitAny": false /* Raise error on expressions and declarations with an implied 'any' type. Disabled for JSweet generated code. */,
+    "strictNullChecks": false /* Enable strict null checks. Disabled for JSweet generated code. */,
     "strictFunctionTypes": true /* Enable strict checking of function types. */,
-    "noUnusedLocals": true /* Report errors on unused locals. */,
+    "noUnusedLocals": false /* Report errors on unused locals. Disabled for JSweet generated code. */,
     "noUnusedParameters": true /* Report errors on unused parameters. */,
     "noImplicitReturns": true /* Report error when not all code paths in function return a value. */,
     "noImplicitThis": false /* support this within a function to define an object (?) */,
@@ -19,10 +19,9 @@
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "sourceMap": true,
-    "outDir": "./dist/tsc/",
+    "outDir": "dist/javascript/",
     "types": [
-      "node",
-      "jest"
+      "node"
     ],
     "lib": [
       "ES6",
@@ -30,7 +29,7 @@
     ]
   },
   "include": [
-    "src/**/*.ts"
+    "dist/typescript/coordtxl/**/*.ts"
   ],
   "exclude": [
     "node_modules",
