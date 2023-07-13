@@ -28,4 +28,12 @@ replay_pid*
 
 # gradle files
 .gradle/
+
+# node install state
+node_modules/
+
+# build state
+build/
+
+# more java build state?
 lib/build/

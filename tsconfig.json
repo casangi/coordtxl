@@ -19,7 +19,7 @@
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "sourceMap": true,
-    "outDir": "dist/javascript/",
+    "outDir": "build/javascript/",
     "types": [
       "node"
     ],
@@ -29,7 +29,7 @@
     ]
   },
   "include": [
-    "dist/typescript/coordtxl/**/*.ts"
+    "build/typescript/coordtxl/**/*.ts"
   ],
   "exclude": [
     "node_modules",

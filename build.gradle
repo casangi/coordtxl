@@ -90,7 +90,7 @@ jsweet {
         sourceMap = true
         sourceRoot = project.file('lib/src')
         tsOnly = true
-        tsOut = project.file('dist/typescript')
+        tsOut = project.file('build/typescript')
         outDir = project.file('.gradle/js')
         includes = ['**/coordtxl/**/*.java', '**/def/**/*.java']
 }
@@ -102,7 +102,7 @@ rootProject.tasks.named("jsweet").configure {
     doLast {
         copy {
             from fileTree(project.file('src/main/typescript/coordtxl'))
-            into project.file('dist/typescript/coordtxl')
+            into project.file('build/typescript/coordtxl')
         }
     }
 }

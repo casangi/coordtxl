@@ -2,7 +2,7 @@
   "name": "coordtxl",
   "version": "0.1.0",
   "description": "coordinate translation library",
-  "main": "dist/typescript/coordtxl/main.ts",
+  "main": "build/typescript/coordtxl/main.ts",
   "repository": "https://github.com/casangi/coordtxl.git",
   "author": "CASA Visualization Team <casa-feedback@nrao.edu>",
   "license": "GPL-2.0",
