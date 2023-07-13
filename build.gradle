@@ -84,15 +84,25 @@ apply plugin: 'org.jsweet.jsweet-gradle-plugin'
 
 jsweet {
         module = 'commonjs'
-      //module = 'umd'
-      //module = 'amd'
-      //module = 'system'
         targetVersion = 'ES5'
         verbose = true
         encoding = 'UTF-8'
         sourceMap = true
         sourceRoot = project.file('lib/src')
-        outDir = project.file('target/js')
-        //targetVersion = EcmaScriptComplianceLevel.ES6
+        tsOnly = true
+        tsOut = project.file('dist/typescript')
+        outDir = project.file('.gradle/js')
         includes = ['**/coordtxl/**/*.java', '**/def/**/*.java']
+}
+
+rootProject.tasks.named("jsweet").configure {
+    /**********************************************************************
+    *** install custom typescript code                                  ***
+    **********************************************************************/
+    doLast {
+        copy {
+            from fileTree(project.file('src/main/typescript/coordtxl'))
+            into project.file('dist/typescript/coordtxl')
+        }
+    }
 }
