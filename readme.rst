@@ -33,7 +33,7 @@ This will build the typescript library in :code:`build/typescript/coordtxl`. The
 Generating JavaScript
 ---------------------
 
-The TypeScript library can then be transformed into JavaScript using the `TypeScript compiler <https://www.typescriptlang.org/docs/handbook/compiler-options.html>`_ (:code:`tsc`). The `Yarn build tool <https://yarnpkg.com/>` is used to fetch and run :code:`tsc`:
+The TypeScript library can then be transformed into JavaScript using the `TypeScript compiler <https://www.typescriptlang.org/docs/handbook/compiler-options.html>`_ (:code:`tsc`). The `Yarn build tool <https://yarnpkg.com/>`_ is used to fetch and run :code:`tsc`:
 
 * :code:`yarn install`
 * :code:`yarn build`
