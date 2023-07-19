@@ -41,9 +41,13 @@ buildscript {
                       url "http://repository.jsweet.org/artifactory/plugins-release-local"
                       allowInsecureProtocol = true
                 }
+                maven {
+                      url "https://plugins.gradle.org/m2/"
+                }
         }
         dependencies {
                 classpath("org.jsweet:jsweet-gradle-plugin:" + JSweetVersion) { transitive = true }
+                classpath "com.github.node-gradle:gradle-node-plugin:5.0.0"
         }
 }
 
@@ -104,6 +108,23 @@ rootProject.tasks.named("jsweet").configure {
             into project.file('build/typescript/coordtxl')
         }
     }
+}
+
+apply plugin: 'com.github.node-gradle.node'
+
+node {
+    yarnVersion = "1.22.19"
+    download = true
+}
+
+task typescript( type: YarnTask) {
+    dependsOn yarn
+    /**************************************************************
+    ***  'jsweet' is both the extension name and the task name  ***
+    **************************************************************/
+    dependsOn tasks.findByName('jsweet')
+    yarnCommand = [ "build" ]
+    args = [ ]
 }
 
 tasks.named('jar') {

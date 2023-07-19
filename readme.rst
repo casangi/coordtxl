@@ -1,7 +1,7 @@
 Introduction
 ------------
 
-This library was created from the coordinates package of `JSky <https://jsky.sourceforge.net/>`_. The primary goal is to create a JavaScript coordinate conversion library for use in a browser. Secondary goals are to make the library available for Java applications and node.js applications. It is implemented in Java and is converted to JavaScript using `JSweet <https://www.jsweet.org/>`_.
+This library was created from the coordinates package of `JSky <https://jsky.sourceforge.net/>`_ version 3.0. The primary goal is to create a JavaScript coordinate conversion library for use in a browser. Secondary goals are to make the library available for Java applications and node.js applications. It is implemented in Java and is converted to JavaScript using `JSweet <https://www.jsweet.org/>`_.
 
 Building Java JAR
 -----------------
@@ -14,7 +14,7 @@ This builds the core :code:`coordtxl` JAR file in :code:`build/libs/`. There is 
 
 * :code:`./gradlew nomtamJar`
 
-This builds a JAR file which depends on the `nom.tam.fits <https://github.com/nom-tam-fits/nom-tam-fits>`_ package. It has a FITS keyword handler based on the :code:`nom.tam.fits` header object.
+This builds a JAR file which depends on the `nom.tam.fits <https://github.com/nom-tam-fits/nom-tam-fits>`_ package. This JAR implements a FITS keyword handler based on the :code:`nom.tam.fits` header object.
 
 Running Tests
 -------------
