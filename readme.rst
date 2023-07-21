@@ -54,7 +54,7 @@ This test use a JSON file (:code:`src/test/resources/coordtxl/test-residual-head
 FITS Header Keywords Used
 -------------------------
 
-This is a list of the FITS header keywords used from a :code:`WCSKeywordProvider` (*circa July, 2023*). Each line includes the member function called, the keyword retrieved and along with sample values from a test :code:`test.residual` interactive clean residual image.
+This is a list of the FITS header keywords used from a :code:`WCSKeywordProvider` (*circa July, 2023*) by the :code:`WCSTransform` conversion class. Each line includes the member function called, the keyword retrieved and along with sample values from a test :code:`test.residual` interactive clean residual image. The :code:`<default: ...>` return values indicates the value actually returned and the fact that the default value was returned instead of a value supplied from the CASA FITS header.
 
 #. :code:`getDoubleValue`:	NAXIS1, 4.0
 #. :code:`getDoubleValue`:	NAXIS2, 512.0
