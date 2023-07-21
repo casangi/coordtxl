@@ -48,7 +48,7 @@ A basic Typescript test is included which checks the coordinate conversion is fo
 
 * :code:`./gradlew tstest`
 
-This test use a JSON file (:code:`src/test/resources/coordtxl/test-residual-header.json`) created from a CASA image to initialize a :code:`WCSTransform` object and convert the pixel origin coordinate to the J2000 coordinate :code:`20:02:54.100, +39:52:37.50 J2000`.
+This test uses a JSON file (:code:`src/test/resources/coordtxl/test-residual-header.json`) created from a CASA image to initialize a :code:`WCSTransform` object and convert the pixel origin coordinate to the J2000 coordinate :code:`20:02:54.100, +39:52:37.50 J2000`.
 
 
 FITS Header Keywords Used
