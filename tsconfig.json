@@ -19,7 +19,7 @@
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "sourceMap": true,
-    "outDir": "build/javascript/",
+    "outDir": "build/javascript/coordtxl",
     "types": [
       "node"
     ],

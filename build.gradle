@@ -117,7 +117,7 @@ node {
     download = true
 }
 
-task typescript( type: YarnTask) {
+task ts( type: YarnTask ) {
     dependsOn yarn
     /**************************************************************
     ***  'jsweet' is both the extension name and the task name  ***
@@ -125,6 +125,11 @@ task typescript( type: YarnTask) {
     dependsOn tasks.findByName('jsweet')
     yarnCommand = [ "build" ]
     args = [ ]
+}
+
+task tstest( type: YarnTask ) {
+    dependsOn ts
+    yarnCommand = [ "tstest" ]
 }
 
 tasks.named('jar') {

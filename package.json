@@ -10,9 +10,11 @@
   "devDependencies": {
     "@types/node": "^20.4.1",
     "ts-node": "^10.9.1",
+    "tslib": "^2.6.0",
     "typescript": "^5.1.6"
   },
   "scripts": {
-      "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "tstest": "cp src/test/resources/coordtxl/test-residual-header.json src/test/typescript/tstest.ts build/javascript && cd build/javascript && ts-node ./tstest.ts"
   }
 }
