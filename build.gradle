@@ -117,7 +117,7 @@ node {
     download = true
 }
 
-task ts( type: YarnTask ) {
+task tsc( type: YarnTask ) {
     dependsOn yarn
     /**************************************************************
     ***  'jsweet' is both the extension name and the task name  ***
@@ -128,7 +128,7 @@ task ts( type: YarnTask ) {
 }
 
 task tstest( type: YarnTask ) {
-    dependsOn ts
+    dependsOn tsc
     yarnCommand = [ "tstest" ]
 }
 
