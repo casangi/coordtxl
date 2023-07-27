@@ -14,7 +14,7 @@ Installation
 Usage
 -----
 
-The world coordinate system is specified using a `FITS <https://en.wikipedia.org/wiki/FITS>`_ header stored in a _keyword_/_value_ map object. This is an example of such a map based on a test image from `CASA <https://casadocs.readthedocs.io/en/latest/>`_::
+The world coordinate system is specified using a `FITS <https://en.wikipedia.org/wiki/FITS>`_ header stored in a *keyword*/*value* map object. This is an example of such a map based on a test image from `CASA <https://casadocs.readthedocs.io/en/latest/>`_::
 
   { "ALTRPIX": 1.0, "ALTRVAL": 1474985003.2841744, "BITPIX": -32, "BSCALE": 1.0,
     "BTYPE": "Intensity", "BUNIT": "        ", "BZERO": 0.0,
