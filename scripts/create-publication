@@ -16,13 +16,6 @@ def error( *args, **kwargs ):
     print( '--------------------------------------------------------------------------------' )
     sys.exit( f'error in {pathlib.Path(__file__).resolve()}' )
     
-print('------------------------------------------------------------------------------------------------------------------------')
-print('Writing environment to: /Users/drs/develop/world-coordinates/coordtxl/NPM_ENVIRONMENT.txt')
-with open('/Users/drs/develop/world-coordinates/coordtxl/NPM_ENVIRONMENT.txt','w') as fd:
-    for k, v in os.environ.items( ):
-        fd.write( f"{k}:\t\t{v}\n" )
-print('------------------------------------------------------------------------------------------------------------------------')
-
 ########################################################################################################################
 ### determine output path
 ########################################################################################################################
@@ -93,7 +86,7 @@ for k, v in markdown_translation.items( ):
     dest = os.path.join(dest_path,v)
     cmd = [ 'pandoc', '-f', 'rst', '-t', 'markdown', '-o', dest, k ]
     print( "\t", ' '.join(cmd) )
-    run( ['pandoc', '-f', 'rst', '-t', 'markdown', '-o', dest, k] )
+    run( ['pandoc', '-f', 'rst', '-t', 'markdown', '-o', dest, k], check=True )
 ########################################################################################################################
 ### copy in files which are not changed
 ########################################################################################################################

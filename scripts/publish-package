@@ -2,12 +2,72 @@
 
 import os
 import sys
+import pathlib
+from time import sleep
+from subprocess import run, CalledProcessError
 
+def error( *args, **kwargs ):
+    print( '--------------------------------------------------------------------------------' )
+    print( *args, **kwargs )
+    print( '--------------------------------------------------------------------------------' )
+    sys.exit( f'error in {pathlib.Path(__file__).resolve()}' )
+
+########################################################################################################################
+### determine output root directory
+########################################################################################################################
+if len(sys.argv) != 2: error( f'an output base path is the required (and only allowed) argument' )
+dest_root = sys.argv[1]
+if not os.path.isdir(dest_root):
+    error( f'the output root directory ("{dest_root}") does not exist or is not a directory' )
 ########################################################################################################################
 ### find package name
 ########################################################################################################################
 name = os.environ.get('npm_package_name',None)
 if name is None: error("'npm_package_name' environment not defined")
-print( f'publishing {name} to npmjs.com' )
-print( '**********UNDER*CONSTRUCTION**************************************************' )
-sys.exit( f'not yet able to publish {name}' )
+########################################################################################################################
+### determine package path
+########################################################################################################################
+package_dir = os.path.join(dest_root,name)
+if not os.path.isdir(package_dir):
+    error( f'the package directory ("{package_dir}") does not exist or is not a directory' )
+if not os.path.isfile(os.path.join(package_dir,'package.json')):
+    error( f'the package directory ("{package_dir}") does not contain a package.json file' )
+
+print( f'publishing {name} to npmjs.com\n' )
+print( f'package directory: {package_dir}\n' )
+print( 'This requires that the current user be authorized (or logged into npm).' )
+print( 'If this has not already been done, it can be done by running "npm adduser"' )
+print( 'at the unix command line.\n' )
+print(  '--------------------------------------------' )
+print( f'IF YOU DO NOT WANT TO PUBLISH, HIT ^C NOW...' )
+print(  '--------------------------------------------' )
+sys.stdout.flush( )
+for i in range(30):
+   sleep(1)
+print( '\nOK, publishing to npmjs.com ...' )
+sys.stdout.flush( )
+
+########################################################################################################################
+### clean environment
+########################################################################################################################
+##
+##  Without this the 'npm' run below will use the 'registry = "https://registry.yarnpkg.com/"' and
+##  we haven't authenticated to it... which results in it asking us to use 'npm adduser'
+##
+if 'NODE' in os.environ: os.environ.pop("NODE")
+if 'YARN_WRAP_OUTPUT' in os.environ: os.environ.pop("YARN_WRAP_OUTPUT")
+for k, v in os.environ.items( ):
+    if k.startswith("npm_"):
+        os.environ.pop(k)
+
+try:
+    os.chdir(package_dir)
+except FileNotFoundError:
+    error( f'could not change to {package_dir}' )
+try:
+    cmd = ['npm', 'publish']
+    print( f'running {" ".join(cmd)} in {package_dir}' )
+    sys.stdout.flush( )
+    run( cmd, check=True )
+except CalledProcessError:
+    error( 'npm publication failed' )

@@ -1,6 +1,6 @@
 {
   "name": "coordtxl",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "private": true,
   "description": "coordinate translation library",
   "keywords": "modules, astronomy, coordinates, wcs",
