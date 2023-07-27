@@ -50,6 +50,25 @@ A basic Typescript test is included which checks the coordinate conversion is fo
 
 This test uses a JSON file (:code:`src/test/resources/coordtxl/test-residual-header.json`) created from a CASA image to initialize a :code:`WCSTransform` object and convert the pixel origin coordinate to the J2000 coordinate :code:`20:02:54.100, +39:52:37.50 J2000`.
 
+Build NPM Package
+-----------------
+
+The :code:`coordtxl` npm package can be created in :code:`dist/coordtxl` by running:
+
+* :code:`./gradlew npmbuild`
+
+It can then be tested by installing this newly built package in a separate npm package (*created for the purpose of testing*) with:
+
+* :code:`npm install file://path/to/work/directory/coordtxl/dist/coordtxl`
+
+Publishing NPM package
+----------------------
+
+:code:`coordtxl` can be published to `npm <http://npmjs.com>`_ by running:
+
+* :code:`./gradlew npmpub`
+
+running :code:`npmbuild` is not required before running :code:`npmpub`, but it does provide a way to check the package before making it available.
 
 FITS Header Keywords Used
 -------------------------
