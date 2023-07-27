@@ -1,9 +1,14 @@
 {
   "name": "coordtxl",
-  "version": "0.1.0",
+  "version": "0.1.1",
+  "private": true,
   "description": "coordinate translation library",
-  "main": "build/typescript/coordtxl/main.ts",
+  "keywords": "modules, astronomy, coordinates, wcs",
+  "main": "build/javascript/coordtxl/coordtxl.js",
+  "types": "build/javascript/coordtxl/**/*.d.ts",
+  "files": "build/javascript/coordtxl/**/*.js",
   "repository": "https://github.com/casangi/coordtxl.git",
+  "homepage": "https://github.com/casangi/coordtxl",
   "author": "CASA Visualization Team <casa-feedback@nrao.edu>",
   "license": "GPL-2.0",
   "private": false,
@@ -15,6 +20,8 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "tstest": "cp src/test/resources/coordtxl/test-residual-header.json src/test/typescript/tstest.ts build/javascript && cd build/javascript && ts-node ./tstest.ts"
+    "tstest": "cp src/test/resources/coordtxl/test-residual-header.json src/test/typescript/tstest.ts build/javascript && cd build/javascript && ts-node ./tstest.ts",
+    "npmbuild": "scripts/create-publication dist",
+    "npmpub": "scripts/publish-package dist"
   }
 }

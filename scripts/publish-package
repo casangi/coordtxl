@@ -1,0 +1,13 @@
+#!/usr/bin/env python3
+
+import os
+import sys
+
+########################################################################################################################
+### find package name
+########################################################################################################################
+name = os.environ.get('npm_package_name',None)
+if name is None: error("'npm_package_name' environment not defined")
+print( f'publishing {name} to npmjs.com' )
+print( '**********UNDER*CONSTRUCTION**************************************************' )
+sys.exit( f'not yet able to publish {name}' )

@@ -1,0 +1,139 @@
+#!/usr/bin/env python3
+
+import os
+import sys
+import time
+import pathlib
+from shutil import copy2
+from subprocess import run
+
+markdown_translation = { 'README_npm.rst': 'README.md' }
+files_to_copy = { 'LICENSE': 'LICENSE' }
+
+def error( *args, **kwargs ):
+    print( '--------------------------------------------------------------------------------' )
+    print( *args, **kwargs )
+    print( '--------------------------------------------------------------------------------' )
+    sys.exit( f'error in {pathlib.Path(__file__).resolve()}' )
+    
+print('------------------------------------------------------------------------------------------------------------------------')
+print('Writing environment to: /Users/drs/develop/world-coordinates/coordtxl/NPM_ENVIRONMENT.txt')
+with open('/Users/drs/develop/world-coordinates/coordtxl/NPM_ENVIRONMENT.txt','w') as fd:
+    for k, v in os.environ.items( ):
+        fd.write( f"{k}:\t\t{v}\n" )
+print('------------------------------------------------------------------------------------------------------------------------')
+
+########################################################################################################################
+### determine output path
+########################################################################################################################
+if len(sys.argv) != 2: error( f'an output base path is the required (and only allowed) argument' )
+dest_root = sys.argv[1]
+if os.path.exists(dest_root) and not os.path.isdir(dest_root):
+    error( f'the output root exists but is not a directory' )
+if not os.path.isdir(dest_root):
+    try:
+        os.makedirs(dest_root)
+    except:
+        error( f'could not create output root directory: {dest_root}' )
+########################################################################################################################
+### find package name
+########################################################################################################################
+name = os.environ.get('npm_package_name',None)
+if name is None: error("'npm_package_name' environment not defined")
+print( f'publication package name:\t\t{name}' )
+########################################################################################################################
+### find javascript index file
+########################################################################################################################
+index = os.environ.get('npm_package_main',None)
+if index is None or not os.path.isfile(index): error(f"'npm_package_main' environment not defined or path does not exist:\n{index}")
+print( f'creating publication package from:\t{index}' )
+########################################################################################################################
+### locate the source tree based on the index
+########################################################################################################################
+source_path = os.path.dirname(index)
+if not os.path.isdir(source_path): error( f'source path is not a directory: {source_path}' )
+########################################################################################################################
+### create output directory
+########################################################################################################################
+dest_path = os.path.join( dest_root, name )
+if os.path.exists(dest_path) and not os.path.isdir(dest_path):
+    error( f'the output directory exists but is not a directory:\n{dest_path}' )
+if os.path.exists(dest_path):
+    dest_path_rename = f"{dest_path}.{time.strftime('%y%m%d.%H%M%S')}"
+    print( f'renaming existing output path to:\t{dest_path_rename}' )
+    os.rename(dest_path,dest_path_rename)
+    if os.path.exists(dest_path): error(f"rename of existing output path failed")
+os.makedirs(dest_path)
+if not os.path.isdir(dest_path):
+    error( f'creation of output path failed: {dest_path}' )
+########################################################################################################################
+### copy source into destination directory
+########################################################################################################################
+source_path_len = len(source_path.split(os.sep))
+for curdir, dirs, files in os.walk(source_path):
+    path = curdir.split(os.sep)
+    relpath = os.path.join(*(path[source_path_len:])) if len(path[source_path_len:]) > 0 else ''
+    dest = os.path.join(dest_path,relpath)
+    if not os.path.isdir(dest):
+        os.makedirs(dest)
+    if not os.path.isdir(dest): error( f'creation of destination directory failed:\n{dest}' )
+    print(f'\t\t\t\t{os.getcwd()}')
+    print(f'\t\t\t\t{source_path}')
+    print(f'\t\t\t\t{curdir}')
+    for file in files:
+        if file.endswith('.ts') or file.endswith('.js'):
+            print(len(path) * '---', file)
+            copy2( os.path.join(curdir,file), dest )
+########################################################################################################################
+### generate readme
+########################################################################################################################
+print('generating markdown')
+for k, v in markdown_translation.items( ):
+    print(f"\t\t>>>>>>-------------->> {k}: {v}")
+    dest = os.path.join(dest_path,v)
+    cmd = [ 'pandoc', '-f', 'rst', '-t', 'markdown', '-o', dest, k ]
+    print( "\t", ' '.join(cmd) )
+    run( ['pandoc', '-f', 'rst', '-t', 'markdown', '-o', dest, k] )
+########################################################################################################################
+### copy in files which are not changed
+########################################################################################################################
+print('copying files')
+for k, v in files_to_copy.items( ):
+    ###
+    ### It's not clear where the '*.js.map' files belong in a published distribution...
+    ### The contents of these files looks like:
+    ###
+    ###     {"version":3,"file":"coordtxl.js","sourceRoot":"","sources":["../../typescript/coordtxl/coordtxl.ts"],"names":[],"mappings":";;;AAAA,gDAA2C;AAAlC,qGAAA,OAAO,OAAA;AAChB,wEAAmE;AAA1D,2HAAA,kBAAkB,OAAA;AAC3B,4DAAuD;AAA9C,+GAAA,YAAY,OAAA;AACrB,0DAAqD;AAA5C,6GAAA,WAAW,OAAA"}
+    ###
+    ### so it references source files that will be OUTSIDE of coordtxl as packaged in dist/coordtxl
+    ###
+    dest = os.path.join(dest_path,v)
+    print( f"\t{k}  ->  {dest}" )
+    copy2( k, dest )
+########################################################################################################################
+### generate package.json
+########################################################################################################################
+dest = os.path.join(dest_path,'package.json')
+kw = { }
+for k, v in os.environ.items( ):
+    if k.startswith('npm_package_keywords_'):
+        kw[k[21:]] = v
+keywords = [''] * len(kw)
+for k, v in kw.items( ):
+    keywords[int(k)] = v.strip(' ,')
+print(f'generating {dest}')
+###  It's not clear if "types"
+###  "types": "./{name}.d.ts",
+with open( dest, 'w' ) as fd:
+    fd.write( f'''{{
+  "name": "{name}",
+  "version": "{os.environ['npm_package_version']}",
+  "description": "{os.environ['npm_package_description']}",
+  "keywords": "{', '.join(keywords)}",
+  "homepage": "{os.environ['npm_package_homepage']}",
+  "repository": "{os.environ['npm_package_repository_url']}",
+  "license": "{os.environ['npm_package_license']}",
+  "main": "{name}.js",
+  "author": "{os.environ['npm_package_author_name']} <{os.environ['npm_package_author_email']}>",
+  "scripts": {{ "test": "echo \\"Error: no test specified\\" && exit 1" }}
+}}''' )

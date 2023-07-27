@@ -4,9 +4,6 @@ apply plugin: 'java'
 apply plugin: 'java-library'
 apply plugin: 'maven-publish'
 
-version = '0.1.0'
-description = """Coordinate translation library"""
-
 // java compatibility version
 sourceCompatibility = 1.11
 targetCompatibility = 1.11
@@ -130,6 +127,16 @@ task tsc( type: YarnTask ) {
 task tstest( type: YarnTask ) {
     dependsOn tsc
     yarnCommand = [ "tstest" ]
+}
+
+task npmbuild( type: YarnTask ) {
+    dependsOn tstest
+    yarnCommand = [ "npmbuild" ]
+}
+
+task npmpub( type: YarnTask ) {
+    dependsOn npmbuild
+    yarnCommand = [ "npmpub" ]
 }
 
 tasks.named('jar') {

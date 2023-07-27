@@ -22,3 +22,4 @@ console.log(p)
 let wcstr = new WorldCoords(p.getX(),p.getY()).toString( )
 console.log( wcstr )
 assert( wcstr == "20:02:54.100, +39:52:37.50 J2000", "conversion failed" )
+console.log( new WorldCoords(p.getX(),p.getY()).format(2000) );

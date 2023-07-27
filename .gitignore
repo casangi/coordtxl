@@ -37,3 +37,9 @@ build/
 
 # more java build state?
 lib/build/
+
+# distributions
+dist/
+
+# python cache directories
+*/**/__pycache__/
