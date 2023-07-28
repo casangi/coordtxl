@@ -70,19 +70,14 @@ for curdir, dirs, files in os.walk(source_path):
     if not os.path.isdir(dest):
         os.makedirs(dest)
     if not os.path.isdir(dest): error( f'creation of destination directory failed:\n{dest}' )
-    print(f'\t\t\t\t{os.getcwd()}')
-    print(f'\t\t\t\t{source_path}')
-    print(f'\t\t\t\t{curdir}')
     for file in files:
         if file.endswith('.ts') or file.endswith('.js'):
-            print(len(path) * '---', file)
             copy2( os.path.join(curdir,file), dest )
 ########################################################################################################################
 ### generate readme
 ########################################################################################################################
 print('generating markdown')
 for k, v in markdown_translation.items( ):
-    print(f"\t\t>>>>>>-------------->> {k}: {v}")
     dest = os.path.join(dest_path,v)
     cmd = [ 'pandoc', '-f', 'rst', '-t', 'markdown', '-o', dest, k ]
     print( "\t", ' '.join(cmd) )
@@ -101,7 +96,6 @@ for k, v in files_to_copy.items( ):
     ### so it references source files that will be OUTSIDE of coordtxl as packaged in dist/coordtxl
     ###
     dest = os.path.join(dest_path,v)
-    print( f"\t{k}  ->  {dest}" )
     copy2( k, dest )
 ########################################################################################################################
 ### generate package.json
