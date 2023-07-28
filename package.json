@@ -1,8 +1,8 @@
 {
   "name": "coordtxl",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "private": true,
-  "description": "coordinate translation library",
+  "description": "astronomical coordinate translation library",
   "keywords": "modules, astronomy, coordinates, wcs",
   "main": "build/javascript/coordtxl/coordtxl.js",
   "types": "build/javascript/coordtxl/**/*.d.ts",
