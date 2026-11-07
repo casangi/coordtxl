@@ -327,9 +327,18 @@ public class WCSTransform implements WorldCoordinateConverter {
                     this.c1type += wcstemp.charAt(3);
                 }
                 if (wcstempLength > 4) {
-                    // Chris S. changed this -- is it a zero- or one-based issue?
-                    //this.ptype = wcstemp.substring(4, 8);
-                    this.ptype = wcstemp.substring(3, 7);
+                    // The projection code follows the run of '-' after the axis name.
+                    // FITS writes "RA---SIN", "DEC--SIN", "GLON-SIN" (code at 5-7, 0-based),
+                    // some writers "RA--SIN", and "RA---TAN-SIP" adds a distortion suffix.
+                    // JSky's substring(3, 7) ("Chris S. changed this -- is it a zero- or
+                    // one-based issue?", replacing substring(4, 8)) fits only "RA--SIN":
+                    // for "RA---SIN" it gives "--SI", no projection is recognized and the
+                    // image is treated as linear (no 1/cos(dec) in right ascension).
+                    int p = wcstemp.indexOf('-');
+                    while (p >= 0 && p < wcstempLength && wcstemp.charAt(p) == '-') {
+                        p++;
+                    }
+                    this.ptype = (p > 0 && p < wcstempLength) ? "-" + wcstemp.substring(p, Math.min(p + 3, wcstempLength)) : "";
                 }
                 //  Find projection type
                 this.pcode = 0;  // default type is linear

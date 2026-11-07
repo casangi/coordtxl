@@ -390,18 +390,21 @@ public class CasaImageLabelTest {
         wcs.imageToWorldCoords(p,false);
         System.out.println(p);
         System.out.println(new WorldCoords(p.getX( ),p.getY( )));
-        assertTrue( indexOfDifference( new WorldCoords(p.getX( ),p.getY( )).toString( ), "20:02:54.100, +39:52:37.50 J2000" ) == -1,
+        // pixel (0,0) of the SIN-projected test image; checked against astropy (FITS pixel
+        // (0,0)) -- until 0.1.6 the projection was not recognized and this gave the
+        // linear (no 1/cos(dec)) "20:02:54.100, +39:52:37.50"
+        assertTrue( indexOfDifference( new WorldCoords(p.getX( ),p.getY( )).toString( ), "20:03:56.406, +39:52:17.78 J2000" ) == -1,
                     "World coordinate string conversion failed." );
         String[] posstrings = new WorldCoords(p.getX( ),p.getY( )).format( );
         assertTrue( posstrings.length == 2, "Coordinate string length was not two." );
         System.out.println( "[ " + (Arrays.stream(posstrings).map(s -> "\"" + s + "\"").collect(Collectors.joining(", "))) + " ]" );
-        assertTrue( indexOfDifference( posstrings[0], "20:02:54.100" ) == -1, "X coordinate was wrong" );
-        assertTrue( indexOfDifference( posstrings[1], "+39:52:37.50" ) == -1, "Y coordinate was wrong" );
+        assertTrue( indexOfDifference( posstrings[0], "20:03:56.406" ) == -1, "X coordinate was wrong" );
+        assertTrue( indexOfDifference( posstrings[1], "+39:52:17.78" ) == -1, "Y coordinate was wrong" );
 
         System.out.println( new WorldCoords(p.getX( ),p.getY( )).getRA( ).toString( ) );
-        assertTrue( indexOfDifference( new WorldCoords(p.getX( ),p.getY( )).getRA( ).toString( ), "20:02:54.100" ) == -1, "X coordinate was wrong" );
+        assertTrue( indexOfDifference( new WorldCoords(p.getX( ),p.getY( )).getRA( ).toString( ), "20:03:56.406" ) == -1, "X coordinate was wrong" );
         System.out.println( new WorldCoords(p.getX( ),p.getY( )).getDec( ).toString( ) );
-        assertTrue( indexOfDifference( new WorldCoords(p.getX( ),p.getY( )).getDec( ).toString( ), "+39:52:37.50" ) == -1, "Y coordinate was wrong" );
+        assertTrue( indexOfDifference( new WorldCoords(p.getX( ),p.getY( )).getDec( ).toString( ), "+39:52:17.78" ) == -1, "Y coordinate was wrong" );
     }
 
 }

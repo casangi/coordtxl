@@ -7,8 +7,8 @@ import pathlib
 from shutil import copy2
 from subprocess import run
 
-markdown_translation = { 'README_npm.rst': 'README.md' }
-files_to_copy = { 'LICENSE': 'LICENSE' }
+### README_npm.md is kept in markdown (npm renders README.md) so that pandoc is not needed
+files_to_copy = { 'LICENSE': 'LICENSE', 'README_npm.md': 'README.md' }
 
 def error( *args, **kwargs ):
     print( '--------------------------------------------------------------------------------' )
@@ -73,15 +73,6 @@ for curdir, dirs, files in os.walk(source_path):
     for file in files:
         if file.endswith('.ts') or file.endswith('.js'):
             copy2( os.path.join(curdir,file), dest )
-########################################################################################################################
-### generate readme
-########################################################################################################################
-print('generating markdown')
-for k, v in markdown_translation.items( ):
-    dest = os.path.join(dest_path,v)
-    cmd = [ 'pandoc', '-f', 'rst', '-t', 'markdown', '-o', dest, k ]
-    print( "\t", ' '.join(cmd) )
-    run( ['pandoc', '-f', 'rst', '-t', 'markdown', '-o', dest, k], check=True )
 ########################################################################################################################
 ### copy in files which are not changed
 ########################################################################################################################

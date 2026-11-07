@@ -21,5 +21,6 @@ wcs.imageToWorldCoords(p,false)
 console.log(p)
 let wcstr = new WorldCoords(p.getX(),p.getY()).toString( )
 console.log( wcstr )
-assert( wcstr == "20:02:54.100, +39:52:37.50 J2000", "conversion failed" )
+// SIN projection (astropy agrees); before 0.1.6, linear: "20:02:54.100, +39:52:37.50 J2000"
+assert( wcstr == "20:03:56.406, +39:52:17.78 J2000", "conversion failed" )
 console.log( new WorldCoords(p.getX(),p.getY()).format(2000) );
