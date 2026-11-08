@@ -70,7 +70,7 @@ Publishing NPM package
 
 `npm <http://npmjs.com>`_ now requires either two factor authentication or that a project be configured with a key which subverts two factor authentication. It is believe that the old process below **may** no longer work because the Gradle process does not run subprocesses with terminal access. As a result, this was the process which was most recently used::
 
-     ./gradlew npmbuild
+   ./gradlew npmbuild
    cd dist/coordtxl
    npm publish
 
