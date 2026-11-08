@@ -5,7 +5,7 @@ This library was created from the coordinates package of `JSky <https://jsky.sou
 
 Requirements
 ------------
-This build uses Gradle 7.6 which uses Groovy under the hood. This version of Gradle only officially supports up to Java 19 for running the JVM. However, experience has shown that Java 11 is **actually** the version that has the best chance of working, e.g. if using SDKMAN :code:`sdk use java 11.0.26-tem`.
+This build uses Gradle 7.6 which uses Groovy under the hood. This version of Gradle only officially supports up to Java 19 for running the JVM. However, experience has shown that Java 11 is **actually** the version that has the best chance of working, e.g. if using `SDKMAN! <https://sdkman.io/>`_ :code:`sdk use java 11.0.26-tem`.
 
 Building Java JAR
 -----------------
