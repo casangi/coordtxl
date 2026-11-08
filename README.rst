@@ -68,11 +68,16 @@ It can then be tested by installing this newly built package in a separate npm p
 Publishing NPM package
 ----------------------
 
-:code:`coordtxl` can be published to `npm <http://npmjs.com>`_ by running:
+`npm <http://npmjs.com>`_ now requires either two factor authentication or that a project be configured with a key which subverts two factor authentication. It is believe that the old process below **may** no longer work because the Gradle process does not run subprocesses with terminal access. As a result, this was the process which was most recently used::
+
+     ./gradlew npmbuild
+   cd dist/coordtxl
+   npm publish
+
+This did result in publishing to the `npm <http://npmjs.com>`_ repostiory. In the past, :code:`coordtxl` was published to `npm <http://npmjs.com>`_ by running:
 
 * :code:`./gradlew npmpub`
 
-running :code:`npmbuild` is not required before running :code:`npmpub`, but it does provide a way to check the package before making it available.
 
 FITS Header Keywords Used
 -------------------------
